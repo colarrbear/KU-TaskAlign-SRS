@@ -4,20 +4,19 @@
 \section{Background}
 \label{section:background}
 
-Many electronic factories (e.g., Thai City Electric) still rely on manual scheduling, where production tasks are planned based on human experience rather than optimized strategies. This traditional approach often leads to inefficiencies in resource utilization and production planning. As industries move toward digital transformation, electronic factories face challenges in modernizing their workflows.
-Our project, TaskAlign, addresses these challenges by providing a task scheduling system that optimizes machine usage and workforce allocation. By incorporating machine data and product specifications such as manufacturing steps and required components then our system generates the most efficient production plan, ensuring that machines are utilized effectively based on the products being manufactured.
+Many conventional electronic equipment factories in Thailand still rely on manual scheduling, where production tasks are planned based on human experience rather than optimized strategies. This traditional approach often leads to inefficiencies in resource utilization and production planning. As industries move toward digital transformation, electronic factories face challenges in modernizing their workflows.
+Our project, TaskAlign, seeks to address these challenges by implementing a job scheduling system that optimizes user-specified criteria, such as production time, machine utilization, and other relevant factors. By incorporating detailed machine-specific data and product specifications, including manufacturing steps and required components, the system generates the most efficient production plan based on the specified parameters. This approach ensures the optimal utilization of resources in the manufacturing process.
 
 \section{Problem Statement}
 \label{section:problem-statement}
 
-Factory production planning often relies on the experience of managers rather than optimized scheduling strategies. Without data-driven decision-making, task allocation may not be efficient, leading to extended machine idle times, production bottlenecks, and suboptimal workforce utilization. These inefficiencies increase operational costs and reduce overall productivity.
-This challenge becomes even more critical as factories scale operations or introduce new product lines, where traditional experience-based scheduling struggles to adapt to complexity. Our project, TaskAlign, provides a solution by allowing factories to input production data into a web application. The system then optimizes task scheduling based on machine capabilities and product requirements, ensuring improved efficiency without requiring costly equipment upgrades.
+Designing the production scheduling in traditional factories with non-digital machinery usually relies on the experience of the managers rather than automatic optimized scheduling strategies. Without data-driven decision-making, task allocation may not be efficient, leading to extended machine idle times, production bottlenecks, and suboptimal workforce utilization. These inefficiencies increase operational costs and reduce overall productivity.
+This challenge becomes even more critical as factories scale operations or introduce new product lines, where traditional experience-based scheduling struggles to adapt to complexity. Our project, TaskAlign, provides a solution by allowing factories to input production data into a web application. The system subsequently optimizes job scheduling based on the user's specified criteria, taking into account machine specifications and product assembly requirements ensuring improved efficiency without requiring costly equipment upgrades.
 
 \section{Solution Overview}
 \label{section:solution-overview}
 
-TaskAlign is a task scheduling system designed for electronic factories that rely on manual production management. The system helps factory managers and operators optimize machine utilization, workforce allocation, and production planning while considering constraints like machine cooldown time, energy consumption, and production dependencies.
-A key feature of TaskAlign is its advanced data encoding system, which transforms user inputs into a representation of the factory's workflow. This visual model allows for comprehensive analysis of production dependencies and constraints. The system then applies optimization algorithms to generate an optimal production schedule, which can be visualized using Gantt charts or other intuitive formats, allowing users to adjust production plans based on constraints.
+TaskAlign is a task scheduling system designed for conventional electronic equipment factories that rely on manual production management. The system assists factory managers and operators in designing job schedules that optimize user-specified optimization criteria, such as production time, machine utilization and workforce allocation, while taking into account constraints like machine cool-down time, energy consumption, and production dependencies. A key feature of TaskAlign is its data encoding system, which transforms user inputs (such as machine specifications, worker assignments, product requirements, and dependencies) into a representation of the factory's workflow that is suitable for job scheduling algorithms. The system then applies optimization algorithms to generate an optimal production schedule that maximizes machine utilization and efficient workforce allocation while respecting constraints like machine cool-down time and production dependencies. Users can view and interact with the resulting schedules through Gantt charts and timeline visualizations, allowing them to make manual adjustments to production plans when necessary.
 
 \subsection{Features}
 \label{subsection:features}
@@ -25,15 +24,26 @@ A key feature of TaskAlign is its advanced data encoding system, which transform
 \begin{enumerate}[leftmargin=80pt]
     \item \textbf{Smart Task Scheduling (Optimization-Based)}
     \begin{itemize}
-        \item Users input machine data (capabilities, max operation time, cooldown time, defect rate, error probability).
+        \item Users input machine data, including:
+        \begin{itemize}
+            \item Name of the machine
+            \item Type of machine
+            \item Capabilities of machine
+            \item The number of fixed workers assigned to operate the machine
+            \item Maximum operation time
+            \item Cooldown time
+            \item Defect rate
+            \item Production rate
+            \item Status of machine (Active, Maintenance, Inactive)
+        \end{itemize}
         \item Users define product data (required parts, assembly steps, dependencies).
         \item The system generates an optimal production schedule considering constraints like machine efficiency, energy usage, and human resource availability.
     \end{itemize}
 
-    \item \textbf{Flexible Scheduling Modes}
+    \item \textbf{Flexible Scheduling Modes}  
     \begin{itemize}
-        \item \textbf{Fresh Start Mode}: Creates a new schedule for factories starting production from zero.
-        \item \textbf{Ongoing Production Mode}: Users input current production status, and the system recalculates the best way to continue.
+        \item \textbf{Fresh Start Mode:} Creates a new schedule for factories starting production from zero.  
+        \item \textbf{Production Resume Mode:} Users can input completed portions, and the system will recalculate the optimal production plan to complete the remaining work.  
     \end{itemize}
 
     \item \textbf{Visualized Task Planning (Gantt Chart \& Timeline View)}
@@ -41,31 +51,53 @@ A key feature of TaskAlign is its advanced data encoding system, which transform
         \item Displays a clear production roadmap, helping managers track daily tasks and machine utilization.
         \item Allows users to adjust schedules manually if needed.
     \end{itemize}
+\end{enumerate}
 
-    \item \textbf{Cost \& Resource Optimization (Optional Advanced Mode)}
+\subsection{Optional Features}
+\label{subsection:optional features}
+\begin{enumerate}[leftmargin=80pt]
+    \item \textbf{Cost \& Resource Optimization}
     \begin{itemize}
         \item Users can input energy consumption, carbon emissions, human cost, etc.
         \item The system analyzes cost-effectiveness and suggests ways to reduce waste and optimize efficiency.
     \end{itemize}
-
 \end{enumerate}
+
+
 
 \section{Target User}
 \label{section:target-user}
 
-TaskAlign is specifically designed for THAI CITY ELECTRIC COMPANY and similar electronics manufacturers facing production scheduling challenges. The company has capable manufacturing resources but needs a systematic approach to optimize their workflow sequencing and resource allocation.
-The system serves:
+\subsection{Target Audience and Challenges}
 
-Factory Managers who oversee production operations and seek more efficient methods for scheduling tasks and allocating resources.
-Operators and Technicians who directly handle machinery and require a user-friendly interface to track and follow optimized schedules.
-Factory Owners looking for cost-effective digital transformation solutions that improve productivity without replacing existing machines.
+TaskAlign is specifically designed for conventional electronic equipment factories in Thailand facing production scheduling challenges. These facilities typically operate with traditional manufacturing processes and equipment that lack integrated digital systems or sensors for automated tracking. The target users are electronics factories that produce various appliances such as refrigerators, air conditioners, washing machines, and small household electronic devices across multiple production lines.
 
-Users typically possess substantial experience in factory operations with varying levels of technical proficiency. TaskAlign accommodates this diversity through an intuitive interface that provides both basic operational guidance and advanced optimization insights.
+\subsubsection{Common Challenges}
+These manufacturing facilities often face common challenges:
+\begin{itemize}
+    \item They operate with capable but aging machinery without built-in digital interfaces.
+    \item Production planning relies heavily on manual methods and staff experience.
+    \item They lack real-time data collection capabilities due to the absence of sensors.
+    \item They need to manage multiple assembly lines producing different products simultaneously.
+    \item They require flexible scheduling to accommodate seasonal demand fluctuations.
+\end{itemize}
+
+\subsubsection{Key Stakeholders}
+The system serves several key stakeholders:
+\begin{itemize}
+    \item \textbf{Factory Managers} who oversee production operations and seek more efficient methods for scheduling tasks and allocating resources. They need comprehensive views of production timelines and resource utilization.
+    \item \textbf{Operators and Technicians} who directly handle machinery and require a user-friendly interface to understand and follow optimized schedules. Since the factories lack automated tracking systems, these users need clear visual representations of the scheduling plan.
+    \item \textbf{Factory Owners} looking for cost-effective digital transformation solutions that improve productivity without replacing existing machines. They seek ROI through better resource allocation rather than capital-intensive equipment upgrades.
+\end{itemize}
+
+Users typically possess substantial experience in factory operations with varying levels of technical proficiency. TaskAlign accommodates this diversity through an intuitive interface that provides both basic operational guidance and advanced optimization insights, making digital transformation accessible even to facilities with limited technology infrastructure.
 
 \section{Benefit}
 \label{section:benefit}
 
-TaskAlign offers practical operational improvements for electronics factories. The solution reduces downtime by coordinating machine operations in a logical sequence, ensuring better utilization of existing equipment. By minimizing idle time and optimizing resource allocation, TaskAlign creates a more efficient production process. The system also provides flexibility for scaling operations, allowing facilities to integrate new product lines without disrupting existing workflows. Most importantly, TaskAlign enables digital transformation through better process optimization rather than equipment replacement, making production improvements accessible and cost-effective.
+TaskAlign offers practical operational improvements for electronics factories. The solution optimizes production schedules according to user-specified criteria, which may include minimizing overall production time, reducing operational costs, or improving energy efficiency depending on the user's criteria. By coordinating machine operations in a logical sequence and efficiently allocating workforce, the system ensures better utilization of existing equipment.
+The flexibility of TaskAlign allows factories to choose which factors to prioritize in their production planning, adapting to changing business needs or seasonal requirements. 
+Most importantly, TaskAlign enables digital transformation through better process optimization rather than equipment replacement, making production improvements accessible and cost-effective for traditional factories that aren't ready for comprehensive automation upgrades.
 
 \section{Terminology}
 \label{section:terminology}
