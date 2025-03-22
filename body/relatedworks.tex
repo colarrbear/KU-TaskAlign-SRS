@@ -72,49 +72,16 @@ TaskAlign distinguishes itself by catering specifically to the electronics manuf
 \section{Literature Review}
 \label{section:literature-review}
 
+Job scheduling optimization is a critical aspect of manufacturing systems, particularly in environments with complex constraints and dynamic requirements. This section reviews three key studies that contribute to advancements in this field.
 
-\subsection{Current Approaches to Production Scheduling}
+\subsection{Optimization Model for Production Scheduling Considering Preventive Maintenance}
+In the dynamic environment of Industry 4.0, \cite{optimization2023} proposed a mathematical optimization model for production scheduling that integrates preventive maintenance activities. The model accounts for real-life constraints such as machine downtime, scrap/rework, availability of raw materials, legal overtime limits, and transit times. It aims to create valid production schedules by distributing production orders across available machines while considering constraints like machine capacity, productivity norms, and planned maintenance. The model also allows for timely adjustments to handle uncertainties effectively. Verification was conducted through quasi-real and real-life experiments using data from an automotive manufacturer of locking systems. Results demonstrated the model's ability to optimize production schedules while accommodating preventive maintenance requirements.
 
-Production scheduling is a critical component of manufacturing operations that directly impacts efficiency, resource utilization, and overall productivity. Traditional production scheduling often relies heavily on human experience and manual planning, which can lead to suboptimal resource allocation and inefficiencies in complex manufacturing environments \cite{alander2024}. As manufacturing systems become increasingly complex with multiple interconnected processes, traditional scheduling methods struggle to maintain efficiency.
+\subsection{Data-Mining-Based Real-Time Optimization of Job Shop Scheduling}
+\cite{datamining2022} explored real-time optimization techniques for job shop scheduling problems using data-mining approaches. The study focused on the dynamic nature of job shop environments where real-time data is critical for decision-making. By leveraging historical and real-time data, the proposed method identifies patterns and optimizes scheduling decisions dynamically. The approach integrates machine learning algorithms to predict job completion times and adjust schedules accordingly. Experimental results showed improvements in scheduling efficiency, reduced idle times, and enhanced resource utilization compared to traditional methods. This study highlights the importance of integrating data-driven techniques into job shop scheduling optimization.
 
-Chen et al. \cite{chen2023} define task scheduling as a real-time process where multiple task attributes must be considered simultaneously while different tasks are processed in parallel. This complexity is particularly evident in microservice-oriented industrial software, where multiple business processes must be executed concurrently. Their research highlights that effective scheduling must account for various characteristics, including strict real-time requirements, the coexistence of independent tasks and workflows, importance-based task attributes, and multi-task processing capabilities.
+\subsection{Multi-Objective Optimal Scheduling with Labor Workload Balance}
+\cite{multiobjective2021} addressed multi-objective scheduling problems by considering labor workload distribution alongside traditional objectives like minimizing makespan or maximizing machine utilization. The proposed model balances workload distribution among workers while optimizing production schedules. It incorporates constraints related to worker availability, skill levels, and fatigue thresholds to ensure equitable workload distribution. The study used metaheuristic algorithms such as Genetic Algorithms (GAs) and Particle Swarm Optimization (PSO) to solve the problem efficiently. Experimental results demonstrated significant improvements in both workload balance and overall production efficiency, making it a promising approach for human-centric manufacturing systems.
 
-\subsection{Optimization-Based Scheduling Methods}
-
-Optimization algorithms play a significant role in modern production scheduling approaches. Alander and Hjalmarsson \cite{alander2024} demonstrated that Genetic Algorithms (GAs) can effectively optimize production sequences, achieving up to 42\% reduction in total processing time compared to alphabetically ordered sequences. Their work emphasizes that even simple randomization of production sequences can improve efficiency by 12--17\%, highlighting the inefficiency of simplistic scheduling approaches.
-
-Various algorithms have been developed for production scheduling optimization, including:
-
-\begin{itemize}
-    \item \textbf{First Come First Serve Algorithm (FCFS)}: Tasks are processed in order of arrival, which is simple but often inefficient.
-    \item \textbf{Earliest Deadline First Algorithm (EDF)}: Prioritizes tasks with the earliest deadlines.
-    \item \textbf{Least Laxity First Algorithm (LLF)}: Schedules tasks based on their laxity (deadline minus processing time).
-    \item \textbf{Fixed Priority Scheduling Algorithm (FPS)}: Assigns static priorities to tasks \cite{chen2023}.
-\end{itemize}
-
-However, these traditional algorithms often fail to consider the complex constraints and multiple objectives present in modern manufacturing environments. Chen et al. \cite{chen2023} proposed a Dynamic Importance-aware Online Scheduling Algorithm (DIOS) that ranks and schedules tasks based on a comprehensive importance function considering inherent task importance, deadline constraints, and critical path factors. Their experimental results demonstrated that DIOS significantly outperformed traditional algorithms in both power system and factory production management scenarios.
-
-\subsection{Smart Manufacturing Scheduling}
-
-The concept of Smart Manufacturing Scheduling (SMS) represents an evolution in production scheduling, leveraging digital technologies to achieve higher levels of automation and autonomy. According to Boza et al. \cite{serranoruiz2023}, SMS integrates Digital Twin (DT) technology with Zero-Defect Manufacturing (ZDM) principles to facilitate self-managing scheduling systems that reduce or eliminate human intervention.
-
-Digital Twin technology enables real-time simulation and optimization of manufacturing processes, allowing for dynamic adjustments in response to disruptions. This capability is particularly valuable for addressing the challenges of complex production environments with varying constraints and requirements \cite{serranoruiz2023}.
-
-\subsection{Constraints and Resource Considerations}
-
-Traditional production scheduling in factories with non-digital machinery often relies on the experience of managers, which can lead to inefficiencies such as machine idle times, production bottlenecks, and suboptimal workforce utilization \cite{serrano2021smart}. As operations scale or new product lines are introduced, these inefficiencies can become more pronounced, highlighting the need for data-driven, optimized scheduling strategies.
-
-Researchers have explored various approaches to address production scheduling optimization. \citet{serrano2021smart} provide a comprehensive review of Smart Manufacturing Scheduling (SMS), emphasizing the potential of Digital Twin (DT) technology and Zero-Defect Manufacturing (ZDM) principles to achieve automated and autonomous scheduling systems. Their review highlights the increasing interest in integrating real-time data, intelligent algorithms, and virtual models to optimize production processes.
-
-\citet{alharbi2018solving} demonstrated the effectiveness of using Genetic Algorithms (GAs) to optimize assembly sequences, reducing assembly times in a car engine pump valve assembly. Their approach led to a reduction from 570 seconds to 500 seconds in just five generations. Similarly, \citet{alanderoptimizing} applied Genetic Algorithms to tackle general production scheduling problems across various setups, including constraint environments, demonstrating improvements in processing time and efficiency.
-
-These studies suggest that Genetic Algorithms are suitable for sequence optimization with varying machine configurations and setups. While \citet{serrano2021smart} highlight the broader trend of integrating digital technologies and automation to transform manufacturing, \citet{alharbi2018solving} and \citet{alanderoptimizing} provide empirical evidence supporting the application of Genetic Algorithms in scheduling tasks. Alander's test cases, along with various constraint-based evaluations, provide a promising avenue for TaskAlign to pursue in conventional factories with non-digital machinery.
-
-
-% Effective production scheduling must account for various constraints and resource limitations. Alander and Hjalmarsson \cite{alander2024} explored the impact of space constraints and fixtures on production efficiency, finding that optimization becomes increasingly important as resource constraints tighten. Their experiments with varying numbers of concurrent products demonstrated that scheduling efficiency is significantly affected by resource constraints, with optimization benefits becoming more pronounced under tighter constraints.
-
-% Chen et al. \cite{chen2023} introduced resource reservation and preemptive scheduling mechanisms to enhance scheduling efficiency. Their resource reservation mechanism ensures that resources needed for high-importance tasks are not allocated to lower-priority tasks, while preemptive scheduling allows urgent tasks to interrupt ongoing less critical tasks. These mechanisms were shown to improve the real-time responsiveness of scheduling systems, particularly in scenarios with time-critical tasks.
-
-% \subsection{Adaptive and Real-Time Scheduling}
-
-% Modern manufacturing environments require scheduling systems that can adapt to changing conditions and constraints. Chen et al. \cite{chen2023} incorporated an online adaptive tuning method in their DIOS algorithm to continuously adjust scheduling parameters based on real-time conditions, ensuring robust performance under dynamic manufacturing scenarios.
+\subsection{Conclusion}
+These studies collectively demonstrate the potential of integrating mathematical models, data-driven techniques, and multi-objective optimization into job scheduling strategies. They provide valuable insights into addressing practical constraints such as preventive maintenance, real-time adaptability, and labor workload balance.
