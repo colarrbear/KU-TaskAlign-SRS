@@ -26,17 +26,36 @@ TaskAlign is a task scheduling system designed for conventional electronic equip
     \begin{itemize}
         \item Users input machine data, including:
         \begin{itemize}
-            \item Name of the machine
-            \item Type of machine
-            \item Capabilities of machine
-            \item The number of fixed workers assigned to operate the machine
+            \item Machine name
+            \item Machine type
+            \item Machine capabilities
+            \item Number of fixed workers assigned to operate the machine
             \item Maximum operation time
             \item Cooldown time
             \item Defect rate
             \item Production rate
             \item Status of machine (Active, Maintenance, Inactive)
         \end{itemize}
-        \item Users define product data (required parts, assembly steps, dependencies).
+        \begin{itemize}
+            \item General product details (Name, Model, Description)
+            \item Product components:
+            \begin{itemize}
+                \item ID (Might be auto generated)
+                \item Component name
+                \item Component steps: Steps in assembling this components (Additional details can be added in the "Assembly Process")
+                \item Total Production time per component production time
+                \item Required machines
+                \item Prerequisite components
+                \item Component quantity
+            \end{itemize}
+            \item Machine capabilities
+            \item Number of fixed workers assigned to operate the machine
+            \item Maximum operation time
+            \item Cooldown time
+            \item Defect rate
+            \item Production rate
+            \item Status of machine (Active, Maintenance, Inactive)
+        \end{itemize}
         \item The system generates an optimal production schedule considering constraints like machine efficiency, energy usage, and human resource availability.
     \end{itemize}
 

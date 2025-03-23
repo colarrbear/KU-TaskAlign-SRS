@@ -6,11 +6,17 @@
 
 % \section*{Key Stakeholders and Their Roles}
 
+\subsection{Primary Target Users (Direct Beneficiaries)}
+These stakeholders directly interact with TaskAlign and gain the most benefits from its scheduling optimization features.
+
 \textbf{Factory Managers} – Oversee production operations and seek efficient scheduling methods to reduce downtime and optimize machine utilization.
 
 \textbf{Production Planners} – Responsible for task scheduling and workforce allocation, ensuring production efficiency and minimizing bottlenecks.
 
 \textbf{Machine Operators \& Technicians} – Directly interact with machinery and rely on TaskAlign for clear, optimized schedules to streamline manual operations.
+
+\subsection{Secondary Target Users (Indirect Beneficiaries)}
+These stakeholders benefit from TaskAlign’s impact but do not use the system as actively as the primary users.
 
 \textbf{Factory Owners} – Interested in cost-effective solutions that improve productivity without requiring expensive equipment upgrades.
 
@@ -27,11 +33,31 @@ TaskAlign addresses the needs of these stakeholders by providing an optimized, d
 \label{section:user-stories}
 
 % //#TODO: place table here
-\begin{figure}[h]
-    \centering
-    \includegraphics[width=0.5\textwidth]{examples/user_story.png}
-    \caption{User Story Table} 
-\end{figure}
+% \begin{figure}[h]
+%     \centering
+%     \includegraphics[width=0.5\textwidth]{examples/user_story.png}
+%     \caption{User Story Table} 
+% \end{figure}
+\begin{table}[!h]
+    \begin{adjustwidth}{-.85in}{-.85in}
+        \noindent
+        \centering
+        \small\begin{tabularx}{1.3\textwidth}{|>{\columncolor{yellow!20}\raggedright\arraybackslash}p{2.5cm}|X|}
+            \hline
+            \textbf{Stakeholder} & \textbf{User Story} \\\hline
+            Factory Manager & I struggle to monitor machine usage and workforce allocation efficiently, leading to production delays. I need a way to streamline scheduling and optimize resource utilization. \\\hline
+            Production Planner & Manually planning production schedules based on experience often leads to inefficiencies. I need a system that can generate optimized schedules based on machine capabilities and product requirements. But I can also adjust it the way I want and the system shows the time that changes. \\\hline
+            Machine Operator & Unclear scheduling causes confusion and delays in my tasks. I need a structured and optimized task assignment that ensures smooth operations. \\\hline
+            Factory Owner & Upgrading machinery is expensive, but inefficiencies in scheduling are increasing costs. I need a cost-effective way to improve production efficiency without heavy investment in new equipment. \\\hline
+            IT \& System Administrator & Manually transferring data between scheduling tools and ERP systems is time-consuming and prone to errors. I need a scheduling system that integrates seamlessly with existing enterprise software. \\\hline
+            Supply Chain \& Logistics Team & Unreliable production schedules make it difficult to coordinate material procurement and deliveries. I need accurate scheduling data to ensure smooth supply chain operations. \\\hline
+            Customer & Production delays result in late deliveries and inconsistent quality. I need manufacturers to have an efficient scheduling system that ensures timely production and consistent product quality. \\\hline
+        \end{tabularx}
+    \end{adjustwidth}
+    \caption{User Stories by Stakeholder}
+\end{table}
+
+
 
 \section{Use Case Diagram}
 \label{section:use-case-diagram}
