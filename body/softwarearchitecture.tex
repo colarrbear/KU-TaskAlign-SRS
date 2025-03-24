@@ -33,3 +33,76 @@ or actions between them./>
 <TIP: Optional, If you are working on a research project that proposes a new
 algorithm, you can describe your algorithm here. It can be in the form of
 pseudocode or any diagram that you deem appropriate./>
+
+\section{AI Component}
+\label{section:ai-component}
+
+\subsection{Introduction to AI Components}
+This section outlines the AI components used in TaskAlign, focusing on job shop scheduling and genetic algorithms. These components are tailored to optimize production scheduling for factories without sensor technology, addressing challenges such as inefficient task sequencing, resource underutilization, and extended production times.
+
+\subsection{Job Shop Scheduling}
+Job shop scheduling is a critical component of TaskAlign, designed to assign tasks to limited resources (machines and workforce) efficiently.
+
+\subsubsection*{Input:}
+\begin{itemize}
+    \item Machine data: Capabilities, cooldown times, defect rates.
+    \item Workforce data: Number of workers needed for that machine, and machine availability.
+    \item Product data: Manufacturing steps, dependencies.
+    \item Constraints: Task deadlines, machine availability.
+\end{itemize}
+
+\subsubsection*{Output:}
+Optimized schedules that minimize idle times and bottlenecks.
+
+\subsubsection*{Techniques:}
+Heuristic methods like First Come First Serve (FCFS) or Earliest Deadline First (EDF) for initial scheduling, followed by optimization using Genetic Algorithms.
+
+\subsection{Genetic Algorithms (GAs)}
+Genetic Algorithms are utilized in TaskAlign to refine production schedules iteratively by mimicking natural selection processes.
+
+\subsubsection*{Input:}
+\begin{itemize}
+    \item Initial population of schedules.
+    \item Fitness function evaluating total production time and resource use.
+    \item Constraints like task dependencies and machine cooldown times.
+\end{itemize}
+
+\subsubsection*{Output:}
+Near-optimal schedules with minimized production time and resource usage.
+
+\subsubsection*{Techniques:}
+\begin{enumerate}
+    \item Selection of the fittest schedules.
+    \item Crossover to combine parent schedules into offspring.
+    \item Mutation for exploring new solutions.
+    \item Termination upon reaching optimal solutions or iteration limits.
+\end{enumerate}
+
+\subsection{Implementation Workflow}
+
+The implementation consists of the following steps:
+\begin{enumerate}
+    \item Data Collection: Manual input of machine capabilities, workforce details, and product requirements.
+    \item Initial Schedule Generation: Using heuristic methods like FCFS or EDF.
+    \item Optimization Using GAs: Iterative refinement of schedules based on fitness evaluation.
+    \item Visualization: Display optimized schedules using Gantt charts or timelines.
+    \item Manual Adjustments: Allow users to modify schedules as needed.
+\end{enumerate}
+
+\subsection{Optimization Objectives}
+
+The system focuses on:
+\begin{enumerate}
+    \item Minimizing overall production time by reducing idle times and optimizing task sequencing.
+    \item Allocating workforce efficiently based on number of workers needed for that machine, and machine availability.
+    \item Reducing operational costs through optional cost analysis modes.
+\end{enumerate}
+
+% \bibliographystyle{plain}
+% \bibliography{references}
+
+% Example citation
+% [1] Alander et al., "Genetic Algorithms in Production Scheduling," 2023.
+
+% Add references here
+% \nocite{}
