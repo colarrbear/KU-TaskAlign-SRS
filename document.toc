@@ -53,7 +53,7 @@
 \contentsline {chapter}{Chapter \hbox to\@tempdima {5\hfil }\leftprotrusion Software Development}{29}{chapter.5}%
 \contentsline {section}{\numberline {5.1}Software Development Methodology}{29}{section.5.1}%
 \contentsline {section}{\numberline {5.2}Technology Stack}{29}{section.5.2}%
-\contentsline {section}{\numberline {5.3}Coding Standards}{30}{section.5.3}%
+\contentsline {section}{\numberline {5.3}Coding Standards}{29}{section.5.3}%
 \contentsline {section}{\numberline {5.4}Progress Tracking Report}{30}{section.5.4}%
 \contentsline {chapter}{Chapter \hbox to\@tempdima {6\hfil }\leftprotrusion Deliverable}{31}{chapter.6}%
 \contentsline {section}{\numberline {6.1}Software Solution}{31}{section.6.1}%

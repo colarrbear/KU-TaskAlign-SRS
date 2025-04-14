@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.25 (MiKTeX 24.1) (preloaded format=pdflatex 2025.3.18)  14 APR 2025 16:31
+This is pdfTeX, Version 3.141592653-2.6-1.40.25 (MiKTeX 24.1) (preloaded format=pdflatex 2025.3.18)  14 APR 2025 18:42
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -897,13 +897,13 @@ Chapter 4.
 
  (body/softwaredevelopment.tex
 Chapter 5.
-<./assets/examples/tech-stack.png, id=561, 613.54219pt x 613.54219pt>
-File: ./assets/examples/tech-stack.png Graphic file (type png)
-<use ./assets/examples/tech-stack.png>
-Package pdftex.def Info: ./assets/examples/tech-stack.png  used on input line 13.
-(pdftex.def)             Requested size: 209.12683pt x 209.12585pt.
-
-Underfull \vbox (badness 1168) has occurred while \output is active []
+<./assets/diagram/TaskAlign_TechStack.png, id=561, 659.01207pt x 560.0925pt>
+File: ./assets/diagram/TaskAlign_TechStack.png Graphic file (type png)
+<use ./assets/diagram/TaskAlign_TechStack.png>
+Package pdftex.def Info: ./assets/diagram/TaskAlign_TechStack.png  used on input line 12.
+(pdftex.def)             Requested size: 209.12683pt x 177.73766pt.
+)
+Underfull \vbox (badness 1694) has occurred while \output is active []
 
  [29
 
@@ -913,8 +913,8 @@ Underfull \vbox (badness 1168) has occurred while \output is active []
 pdfTeX warning (ext4): destination with the same identifier (name{figure.5.1}) has been already used, duplicate ignored
 <argument> ...shipout:D \box_use:N \l_shipout_box 
                                                   \__shipout_drop_firstpage_...
-l.21 \section
-             {Progress Tracking Report} <./assets/examples/tech-stack.png>]) [30]
+l.77     \include{body/softwaredevelopment}
+                                            <./assets/diagram/TaskAlign_TechStack.png>] [30]
 \openout2 = `body/deliverable.aux'.
 
  (body/deliverable.tex
@@ -965,14 +965,14 @@ Package rerunfilecheck Info: File `document.out' has not changed.
  ) 
 Here is how much of TeX's memory you used:
  15791 strings out of 474486
- 274478 string characters out of 5742811
+ 274550 string characters out of 5742811
  1943542 words of memory out of 5000000
  37253 multiletter control sequences out of 15000+600000
  641627 words of font info for 332 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  75i,12n,79p,1282b,823s stack positions out of 10000i,1000n,20000p,200000b,200000s
 <C:/Users/Buravit/AppData/Local/Programs/MiKTeX/fonts/type1/urw/times/utmb8a.pfb><C:/Users/Buravit/AppData/Local/Programs/MiKTeX/fonts/type1/urw/times/utmr8a.pfb><C:/Users/Buravit/AppData/Local/Programs/MiKTeX/fonts/type1/urw/times/utmri8a.pfb>
-Output written on document.pdf (48 pages, 1733518 bytes).
+Output written on document.pdf (48 pages, 1335535 bytes).
 PDF statistics:
  681 PDF objects out of 1000 (max. 8388607)
  159 named destinations out of 1000 (max. 500000)
