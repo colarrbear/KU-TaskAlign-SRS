@@ -1,0 +1,12 @@
+~\hfill \textbf {Page}\par \sp@ce@skip .2in\relax \vskip \sp@ce@skip \relax \fontsize {14.4}{17}\selectfont \abovedisplayskip 14\p@ plus3\p@ minus7\p@ \abovedisplayshortskip \z@ plus4\p@ \belowdisplayshortskip 7\p@ plus4\p@ minus3\p@ \belowdisplayskip \abovedisplayskip \let \leftmargin \leftmargini \parsep 4\p@ plus2\p@ minus\p@ \topsep 8\p@ plus2\p@ minus4\p@ \itemsep 4\p@ plus2\p@ minus\p@ \leftmargin \leftmargini \parsep 4\p@ plus2\p@ minus\p@ \topsep 8\p@ plus2\p@ minus4\p@ \itemsep 4\p@ plus2\p@ minus\p@ 
+\contentsline {figure}{\numberline {3.1}{\ignorespaces Use Case Diagram of TaskAlign}}{16}{figure.3.1}%
+\contentsline {figure}{\numberline {3.2}{\ignorespaces Mockup of Machine Management}}{17}{figure.3.2}%
+\contentsline {figure}{\numberline {3.3}{\ignorespaces Mockup of Product Management}}{18}{figure.3.3}%
+\contentsline {figure}{\numberline {3.4}{\ignorespaces Mockup of Product Details, Product Components part}}{19}{figure.3.4}%
+\contentsline {figure}{\numberline {3.5}{\ignorespaces Mockup of Product Details, Assembly Process}}{20}{figure.3.5}%
+\contentsline {figure}{\numberline {3.6}{\ignorespaces Mockup of Schedule Management, Fresh Start Mode}}{20}{figure.3.6}%
+\contentsline {figure}{\numberline {3.7}{\ignorespaces Mockup of Schedule Management, Production Resume Mode}}{21}{figure.3.7}%
+\contentsline {figure}{\numberline {3.8}{\ignorespaces Mockup of Gantt Chart in Schedule Management}}{22}{figure.3.8}%
+\contentsline {figure}{\numberline {3.9}{\ignorespaces Mockup of Monthly View in Schedule Management}}{23}{figure.3.9}%
+\contentsline {figure}{\numberline {3.10}{\ignorespaces Mockup of Daily Schedule in Monthly View}}{24}{figure.3.10}%
+\contentsline {figure}{\numberline {5.1}{\ignorespaces Example technology stack}}{29}{figure.5.1}%
