@@ -9,27 +9,29 @@ Electronic manufacturing facilities, especially those utilizing conventional equ
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=1\textwidth]{assets/examples/system_business_workflow.png} % Replace with your actual image file
-    \caption{illustrates the business workflow of the TaskAlign system with AI integration highlighted.}
+    \includegraphics[width=0.95\linewidth]{assets/examples/system_business_workflow.png} % Replace with your actual image file
+    \caption{illustrates the business workflow of the TaskAlign system with AI integration.}
     \label{fig:business_workflow}
 \end{figure}
 
-Within this workflow, the AI component processes the machine specifications, product requirements, and manufacturing constraints to generate optimized schedules. The integration occurs primarily at the scheduling decision point, where conventional systems would typically rely on manual planning methods.
+The business workflow of the TaskAlign system begins with the Planner or Factory Manager providing essential production data through the web-based user interface. This input includes machine specifications, mold information, component requirements, and relevant operational parameters such as processing times and production constraints. Once submitted, the data is transmitted from the frontend interface to the backend system via a FastAPI-based application programming interface (API). The backend performs a validation and preprocessing stage, ensuring that all required fields are complete, constraints are logically consistent, and the data is properly structured for optimization. If the input data fails validation, the system returns feedback to the frontend, prompting the user to correct any inconsistencies before proceeding. When the input is validated successfully, the scheduling engine—powered by a Genetic Algorithm (GA) combined with a constraint-aware decoder—generates a feasible production schedule under finite-capacity and mold constraints. The system then produces an output consisting of scheduled timeline tasks and any unmet demand, which is presented visually through Gantt chart and timeline views. At this stage, the planner reviews the generated schedule and decides whether to approve it or make manual adjustments. If adjustments are required, the user modifies the schedule accordingly, and the system updates the plan. Once approved, the final production schedule is confirmed and finalized for implementation. 
 
-The implementation of AI in this context is justified by several key factors. First, the scheduling problem in electronics manufacturing presents considerable complexity, with factorial growth in the solution space as machines and tasks increase. For even a modest factory with 10 machines and 50 tasks, the number of possible schedule configurations becomes astronomically large, beyond what human planners can effectively evaluate.
+% Within this workflow, the AI component processes the machine specifications, product requirements, and manufacturing constraints to generate optimized schedules. The integration occurs primarily at the scheduling decision point, where conventional systems would typically rely on manual planning methods.
 
-Second, the scheduling environment is dynamic, with frequent changes in machine availability, production priorities, and manufacturing requirements. Traditional rule-based systems struggle to adapt to these constantly changing conditions without significant manual intervention.
+% The implementation of AI in this context is justified by several key factors. First, the scheduling problem in electronics manufacturing presents considerable complexity, with factorial growth in the solution space as machines and tasks increase. For even a modest factory with 10 machines and 50 tasks, the number of possible schedule configurations becomes astronomically large, beyond what human planners can effectively evaluate.
 
-Furthermore, the manufacturing scheduling problem can accept near-optimal solutions that balance multiple objectives. The ability to generate schedules that are 95\% optimal in a matter of minutes provides significantly more value than theoretical perfectly optimal schedules that might require a large amount of time for computation. The genetic algorithm approach selected for TaskAlign offers this favorable balance between solution quality and computational efficiency.
+% Second, the scheduling environment is dynamic, with frequent changes in machine availability, production priorities, and manufacturing requirements. Traditional rule-based systems struggle to adapt to these constantly changing conditions without significant manual intervention.
 
-By integrating AI at this crucial decision point, TaskAlign transforms the traditionally experience-dependent scheduling process into a data-driven optimization framework while maintaining appropriate human oversight and intervention capabilities.
+% Furthermore, the manufacturing scheduling problem can accept near-optimal solutions that balance multiple objectives. The ability to generate schedules that are 95\% optimal in a matter of minutes provides significantly more value than theoretical perfectly optimal schedules that might require a large amount of time for computation. The genetic algorithm approach selected for TaskAlign offers this favorable balance between solution quality and computational efficiency.
+
+% By integrating AI at this crucial decision point, TaskAlign transforms the traditionally experience-dependent scheduling process into a data-driven optimization framework while maintaining appropriate human oversight and intervention capabilities.
 
 \section{Goal Hierarchy}
 \label{section:technology-stack}
 \subsection{Organizational Goals (Factory Level)}
 \begin{itemize}
     \item Improve machine utilization from industry average of 60--70\% to a target of 80--85\%.
-    % \item Increase overall production throughput by 15--20\%.
+    \item Increase overall production throughput by 15--20\%.
     \item Reduce operational costs through optimized resource utilization.
     \item Enable digital transformation without expensive equipment upgrades.
     \item Enhance scalability when incorporating new product lines.
