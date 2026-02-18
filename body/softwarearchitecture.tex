@@ -1,102 +1,130 @@
 \chapter{Software Architecture Design}
 \label{chap:software-architecture-design}
-<TIP: Describe how you design your application using Unified Modelling
-Language (UML). There should be at least two diagrams that describe the
-software architecture. You may add additional or remove unnecessary diagrams.
-However, there needs to be a coherency between them at the end./>
-
-\section{Domain Model}
-\label{section:domain-model}
-<TIP: Describe the business concept of your project. Showcase a
-domain model that captures the said concept./>
-
-\section{Design Class Diagram}
-\label{section:design-class-diagram}
-<TIP: Showcase a design class diagram for your project and explain
-how it works here. You can group classes into packages or layers to communicate your
-design better./>
-
-\section{Sequence Diagram}
-\label{section:sequence-diagram}
-<TIP: Sequence diagrams describe how the software runs at runtime.
-You do not have to create a sequence diagram for every scenario. However,
-there should be one for all the main ones./>
-
-<ChatGPT: Creating a sequence diagram for every use case is not
-strictly necessary, but it can be a valuable tool in certain situations. Sequence
-diagrams are particularly useful for illustrating the interactions between different
-components or objects in a system over time, showcasing the flow of messages
-or actions between them./>
-
-\section{Algorithm}
-\label{section:algorithm}
-<TIP: Optional, If you are working on a research project that proposes a new
-algorithm, you can describe your algorithm here. It can be in the form of
-pseudocode or any diagram that you deem appropriate./>
 
 \section{AI Component}
 \label{section:ai-component}
 
 \subsection{Introduction to AI Components}
-This section outlines the AI components used in TaskAlign, focusing on job shop scheduling and genetic algorithms. These components are tailored to optimize production scheduling for factories without sensor technology, addressing challenges such as inefficient task sequencing, resource underutilization, and extended production times.
+This section describes the AI components used in TaskAlign for \textbf{injection molding production planning} under \textbf{finite capacity constraints}. The goal is to generate a feasible, high-quality \textbf{draft schedule} for human planners to review and adjust, especially in factories that still rely on manual planning processes.
 
-\subsection{Job Shop Scheduling}
-Job shop scheduling is a critical component of TaskAlign, designed to assign tasks to limited resources (machines and workforce) efficiently.
+TaskAlign focuses on practical constraints commonly found in molding operations, including:
+\begin{itemize}
+    \item Machine group and tonnage limitations (e.g., small/medium/large).
+    \item Mold compatibility and \textbf{mold exclusivity} (a mold cannot be used on two machines at the same time).
+    \item Calendar-based capacity planning using hours per day and machine efficiency.
+    \item Setup activities (mold change and color change) represented explicitly in the schedule.
+    \item Precedence constraints between components (prerequisites).
+    \item Due dates and lead-time targets for monthly planning.
+\end{itemize}
+
+\subsubsection*{Finite-Capacity Injection Molding Scheduling}
+TaskAlign implements a finite-capacity scheduling model that assigns production to machines across a planning horizon (e.g., one month), while ensuring all operational constraints are satisfied.
 
 \subsubsection*{Input:}
 \begin{itemize}
-    \item Machine data: Capabilities, cooldown times, defect rates.
-    \item Workforce data: Number of workers needed for that machine, and machine availability.
-    \item Product data: Manufacturing steps, dependencies.
-    \item Constraints: Task deadlines, machine availability.
+    \item \textbf{Machine data:}
+    \begin{itemize}
+        \item Machine group (e.g., small/medium/large)
+        \item Machine tonnage
+        \item Hours per day (calendar capacity)
+        \item Efficiency (effective capacity multiplier)
+    \end{itemize}
+
+    \item \textbf{Mold data:}
+    \begin{itemize}
+        \item Mold group (must match machine group)
+        \item Mold tonnage (must be $\le$ machine tonnage)
+        \item Mold treated as a constrained shared resource (exclusive use)
+    \end{itemize}
+
+    \item \textbf{Component (demand) data:}
+    \begin{itemize}
+        \item Component ID and name
+        \item Required mold ID
+        \item Color
+        \item Cycle time (seconds per piece)
+        \item Quantity (pieces)
+        \item Prerequisite components (dependencies)
+        \item Due day and lead time (days) for monthly planning
+    \end{itemize}
+
+    \item \textbf{Operational parameters:}
+    \begin{itemize}
+        \item Mold change time (hours)
+        \item Color change time (hours)
+        \item Planning horizon (month days)
+    \end{itemize}
 \end{itemize}
 
 \subsubsection*{Output:}
-Optimized schedules that minimize idle times and bottlenecks.
+A machine-by-machine schedule with explicit \textbf{start and end timestamps} for each scheduled activity:
+\begin{itemize}
+    \item \texttt{CHANGE\_COLOR}
+    \item \texttt{CHANGE\_MOLD}
+    \item \texttt{WAIT} (e.g., waiting for mold availability or prerequisites)
+    \item \texttt{PRODUCE} (with produced quantity, used hours, mold, and color)
+\end{itemize}
+The output is designed to be compatible with Gantt/timeline visualization and spreadsheet-based review.
 
 \subsubsection*{Techniques:}
-Heuristic methods like First Come First Serve (FCFS) or Earliest Deadline First (EDF) for initial scheduling, followed by optimization using Genetic Algorithms.
+TaskAlign uses a hybrid approach:
+\begin{enumerate}
+    \item A \textbf{Genetic Algorithm (GA)} searches for good \textbf{priority orderings} of components.
+    \item A constraint-aware \textbf{decoder} constructs a feasible schedule by simulating day-by-day execution and enforcing:
+    \begin{itemize}
+        \item Mold exclusivity in time (no overlapping usage)
+        \item Machine group/tonnage feasibility
+        \item Setup activities (mold/color changes)
+        \item Prerequisite satisfaction
+        \item Daily capacity based on hours/day and efficiency
+    \end{itemize}
+\end{enumerate}
+This method generates high-quality draft schedules efficiently, even when exact optimization would be computationally expensive.
 
-\subsection{Genetic Algorithms (GAs)}
-Genetic Algorithms are utilized in TaskAlign to refine production schedules iteratively by mimicking natural selection processes.
+\subsection{Genetic Algorithms (GAs) for Priority Search}
+Genetic Algorithms are used to explore different production priorities and sequencing decisions.
 
 \subsubsection*{Input:}
 \begin{itemize}
-    \item Initial population of schedules.
-    \item Fitness function evaluating total production time and resource use.
-    \item Constraints like task dependencies and machine cooldown times.
+    \item An initial population of \textbf{genomes}, where each genome is a permutation (ordering) of component IDs.
+    \item A \textbf{decoder} that maps a genome into a concrete schedule while enforcing constraints.
+    \item A \textbf{fitness function} that scores schedules based on practical planning outcomes (e.g., produced quantity, unmet demand penalties, late-start penalties, and penalties for excessive setup and wait time).
 \end{itemize}
 
 \subsubsection*{Output:}
-Near-optimal schedules with minimized production time and resource usage.
+A near-optimal component ordering and its decoded schedule that best satisfies demand while respecting constraints.
 
 \subsubsection*{Techniques:}
 \begin{enumerate}
-    \item Selection of the fittest schedules.
-    \item Crossover to combine parent schedules into offspring.
-    \item Mutation for exploring new solutions.
-    \item Termination upon reaching optimal solutions or iteration limits.
+    \item \textbf{Selection} of higher-fitness genomes (elitism and reproduction).
+    \item \textbf{Crossover} (order-preserving crossover) to mix two parent orderings.
+    \item \textbf{Mutation} (swap mutation) to explore new orderings.
+    \item \textbf{Termination} after a fixed number of generations or when improvements plateau.
 \end{enumerate}
 
 \subsection{Implementation Workflow}
 
 The implementation consists of the following steps:
 \begin{enumerate}
-    \item Data Collection: Manual input of machine capabilities, workforce details, and product requirements.
-    \item Initial Schedule Generation: Using heuristic methods like FCFS or EDF.
-    \item Optimization Using GAs: Iterative refinement of schedules based on fitness evaluation.
-    \item Visualization: Display optimized schedules using Gantt charts or timelines.
-    \item Manual Adjustments: Allow users to modify schedules as needed.
+    \item \textbf{Data Collection:} Users provide machines, molds, component demands, dependencies, and planning parameters.
+    \item \textbf{Initialization:} A GA population is generated by randomizing component priority orders.
+    \item \textbf{Decoding (Schedule Construction):} For each genome, the decoder simulates scheduling across the monthly horizon, producing tasks with start/end times per machine.
+    \item \textbf{Fitness Evaluation:} Each decoded schedule is scored based on production completeness (unmet demand), due-date/lead-time performance, and operational overhead (setup/wait).
+    \item \textbf{GA Optimization Loop:} Selection, crossover, and mutation iteratively refine the population.
+    \item \textbf{Result Output:} The best schedule is returned in a timeline-ready structure for Gantt charts, Excel export, and human review.
+    \item \textbf{Manual Adjustments (Future Extension):} Planners may override or edit the schedule (e.g., machine breakdowns, urgent orders) and re-run optimization around fixed decisions.
 \end{enumerate}
 
 \subsection{Optimization Objectives}
-
-The system focuses on:
+The system focuses on generating a feasible and practical draft schedule by balancing:
 \begin{enumerate}
-    \item Minimizing overall production time by reducing idle times and optimizing task sequencing.
-    \item Allocating workforce efficiently based on number of workers needed for that machine, and machine availability.
-    \item Reducing operational costs through optional cost analysis modes.
+    \item \textbf{Demand fulfillment:} Maximize produced quantity and minimize unmet demand.
+    \item \textbf{On-time readiness:} Encourage starting components early enough to meet due day minus lead time.
+    \item \textbf{Operational efficiency:} Reduce excessive mold changes, color changes, and unnecessary waiting.
 \end{enumerate}
+
+TaskAlign is designed as a \textbf{decision-support tool} rather than an autonomous system, providing planners with a structured baseline plan that reduces manual effort while keeping humans in control of final production decisions.
+
 
 % \bibliographystyle{plain}
 % \bibliography{references}

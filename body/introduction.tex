@@ -16,54 +16,52 @@ This challenge becomes even more critical as factories scale operations or intro
 \section{Solution Overview}
 \label{section:solution-overview}
 
-TaskAlign is a task scheduling system designed for conventional electronic equipment factories that rely on manual production management. The system assists factory managers and operators in designing job schedules that optimize user-specified optimization criteria, such as production time, machine utilization and workforce allocation, while taking into account constraints like machine cool-down time, energy consumption, and production dependencies. A key feature of TaskAlign is its data encoding system, which transforms user inputs (such as machine specifications, worker assignments, product requirements, and dependencies) into a representation of the factory's workflow that is suitable for job scheduling algorithms. The system then applies optimization algorithms to generate an optimal production schedule that maximizes machine utilization and efficient workforce allocation while respecting constraints like machine cool-down time and production dependencies. Users can view and interact with the resulting schedules through Gantt charts and timeline visualizations, allowing them to make manual adjustments to production plans when necessary.
+TaskAlign is a task scheduling system designed for conventional electronic equipment factories that rely on manual production management. The system assists factory managers and operators in designing job schedules that specifically optimize for production time and machine utilization, while taking into account constraints like machine cool-down time, energy consumption, and production dependencies. A key feature of TaskAlign is its data encoding system, which transforms user inputs (such as machine specifications, product requirements, and dependencies) into a representation of the factory's workflow that is suitable for job scheduling algorithms. The system then applies optimization algorithms to generate an optimal production schedule that minimizes total completion time and maximizes machine utilization while respecting constraints like machine cool-down time and production dependencies. Users can view and interact with the resulting schedules through Gantt charts and timeline visualizations, allowing them to make manual adjustments to production plans when necessary.
 
 \subsection{Features}
 \label{subsection:features}
 
 \begin{enumerate}[leftmargin=80pt]
-    \item \textbf{Smart Task Scheduling (Optimization-Based)}
-    \begin{itemize}
-        \item Users input machine data, including:
-        \begin{itemize}
-            \item Machine name
-            \item Machine type
-            \item Machine capabilities
-            \item Number of fixed workers assigned to operate the machine
-            \item Maximum operation time
-            \item Cooldown time
-            \item Defect rate
-            \item Production rate
-            \item Status of machine (Active, Maintenance, Inactive)
-        \end{itemize}
-        \begin{itemize}
-            \item General product details (Name, Model, Description)
-            \item Product components:
-            \begin{itemize}
-                \item ID (Might be auto generated)
-                \item Component name
-                \item Component steps: Steps in assembling this components (Additional details can be added in the "Assembly Process")
-                \item Total Production time per component production time
-                \item Required machines
-                \item Prerequisite components
-                \item Component quantity
-            \end{itemize}
-            \item Machine capabilities
-            \item Number of fixed workers assigned to operate the machine
-            \item Maximum operation time
-            \item Cooldown time
-            \item Defect rate
-            \item Production rate
-            \item Status of machine (Active, Maintenance, Inactive)
-        \end{itemize}
-        \item The system generates an optimal production schedule considering constraints like machine efficiency, energy usage, and human resource availability.
-    \end{itemize}
+    \item \textbf{Smart Task Scheduling (Optimization-Based)} 
+    Web application accepts a \textbf{monthly Assembly Master Plan} in Excel format 
+    and uses it as input for plastic injection molding production planning. 
+    The input consists of the following elements:
 
-    \item \textbf{Flexible Scheduling Modes}  
     \begin{itemize}
-        \item \textbf{Fresh Start Mode:} Creates a new schedule for factories starting production from zero.  
-        \item \textbf{Production Resume Mode:} Users can input completed portions, and the system will recalculate the optimal production plan to complete the remaining work.  
-    \end{itemize}
+  \item \textbf{Planning Period}
+  \begin{itemize}
+    \item Number of working days in the month used as the scheduling horizon.
+  \end{itemize}
+
+  \item \textbf{Injection Molding Machines}
+  \begin{itemize}
+    \item Machine ID, name, group, tonnage capacity, available working hours per day, and efficiency.
+  \end{itemize}
+
+  \item \textbf{Molds}
+  \begin{itemize}
+    \item Mold ID, mold group, and required tonnage for machine compatibility checking.
+  \end{itemize}
+
+  \item \textbf{Components / Parts}
+  \begin{itemize}
+    \item Component ID and name
+    \item Required quantity and cycle time
+    \item Assigned mold and color
+    \item Due date and lead time
+    \item Prerequisite components for assembly relationships
+  \end{itemize}
+
+  \end{itemize}
+
+
+This input enables the system to automatically decompose the assembly plan into required plastic parts and generate a feasible production plan under real factory constraints. Users are also able to manually modify the input data through the web interface.
+
+    % \item \textbf{Flexible Scheduling Modes}  
+    % \begin{itemize}
+    %     \item \textbf{Fresh Start Mode:} Creates a new schedule for factories starting production from zero.  
+    %     \item \textbf{Production Resume Mode:} Users can input completed portions, and the system will recalculate the optimal production plan to complete the remaining work.  
+    % \end{itemize}
 
     \item \textbf{Visualized Task Planning (Gantt Chart \& Timeline View)}
     \begin{itemize}

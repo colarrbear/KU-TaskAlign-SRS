@@ -1,23 +1,579 @@
-\chapter{Software Development}
+\chapter{AI Component Design }
 \label{chap:software-development}
 
-\section{Software Development Methodology}
-\label{section:software-development-methodology}
-<TIP: Describe your software development methodology in this section. />
+\section{Business Context \& AI Integration}
+\label{section:businesscontext}
+Electronic manufacturing facilities, especially those utilizing conventional equipment, face significant challenges in optimizing production schedules. The manual scheduling processes currently employed in these facilities rely heavily on human experience and intuition, leading to inefficient resource allocation, extended machine idle times, and suboptimal production sequencing. These challenges create an ideal application scenario for artificial intelligence techniques.
 
-\section{Technology Stack}
-\label{section:technology-stack}
+\subsection{System/Business Workflow Diagram}
+
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.5\textwidth]{diagram/TaskAlign_TechStack.png}
-    \caption{TaskAlign's technology stack}
+    \includegraphics[width=1\textwidth]{assets/examples/system_business_workflow.png} % Replace with your actual image file
+    \caption{illustrates the business workflow of the TaskAlign system with AI integration highlighted.}
+    \label{fig:business_workflow}
 \end{figure}
 
-\section{Coding Standards}
-\label{section:coding-standards}
-<TIP: Describe your coding standard for this project here. />
+Within this workflow, the AI component processes the machine specifications, product requirements, and manufacturing constraints to generate optimized schedules. The integration occurs primarily at the scheduling decision point, where conventional systems would typically rely on manual planning methods.
 
-\section{Progress Tracking Report}
+The implementation of AI in this context is justified by several key factors. First, the scheduling problem in electronics manufacturing presents considerable complexity, with factorial growth in the solution space as machines and tasks increase. For even a modest factory with 10 machines and 50 tasks, the number of possible schedule configurations becomes astronomically large, beyond what human planners can effectively evaluate.
+
+Second, the scheduling environment is dynamic, with frequent changes in machine availability, production priorities, and manufacturing requirements. Traditional rule-based systems struggle to adapt to these constantly changing conditions without significant manual intervention.
+
+Furthermore, the manufacturing scheduling problem can accept near-optimal solutions that balance multiple objectives. The ability to generate schedules that are 95\% optimal in a matter of minutes provides significantly more value than theoretical perfectly optimal schedules that might require a large amount of time for computation. The genetic algorithm approach selected for TaskAlign offers this favorable balance between solution quality and computational efficiency.
+
+By integrating AI at this crucial decision point, TaskAlign transforms the traditionally experience-dependent scheduling process into a data-driven optimization framework while maintaining appropriate human oversight and intervention capabilities.
+
+\section{Goal Hierarchy}
+\label{section:technology-stack}
+\subsection{Organizational Goals (Factory Level)}
+\begin{itemize}
+    \item Improve machine utilization from industry average of 60--70\% to a target of 80--85\%.
+    % \item Increase overall production throughput by 15--20\%.
+    \item Reduce operational costs through optimized resource utilization.
+    \item Enable digital transformation without expensive equipment upgrades.
+    \item Enhance scalability when incorporating new product lines.
+\end{itemize}
+
+\subsection{System Goals (TaskAlign Application)}
+\begin{itemize}
+    \item Generate optimized production schedules based on user constraints.
+    \item Provide an intuitive interface for manual data input of machine, product, and workforce information.
+    \item Transform complex manufacturing data into structured representations suitable for AI algorithms.
+    \item Visualize generated schedules effectively through Gantt charts and timeline views.
+\end{itemize}
+
+\subsection{User Goals}
+\begin{itemize}
+    \item \textbf{Factory Managers:} Reduce time spent on scheduling by 20--50\% while improving schedule quality.
+    \item \textbf{Production Planners:} Generate reliable production schedules that minimize bottlenecks and idle time.
+    \item \textbf{Machine Operators:} Receive clear, structured task assignments that maximize productivity.
+    \item \textbf{All Users:} Understand and potentially adjust AI-generated schedules when necessary.
+\end{itemize}
+
+\subsection{AI Model Goals}
+\begin{itemize}
+    \item Maximize machine utilization across the production facility.
+    \item Minimize makespan (total production time) for a given set of manufacturing tasks.
+    \item Maintain strict adherence to manufacturing constraints (machine--mold group matching, tonnage limits, mold exclusivity, prerequisite dependencies, setup times for mold/color changes, and finite daily capacity based on hours per day and efficiency).
+    \item Generate near-optimal schedules for typical factory configurations.
+    \item Provide consistent performance across varying problem sizes and constraints.
+\end{itemize}
+
+\subsection{Success Measurement Framework}
+The success of these hierarchical goals will be measured through a structured evaluation framework, as detailed in Table \ref{tab:success_metrics}. This multi-level approach ensures that the AI component's performance directly supports the higher-level organizational objectives while providing specific, actionable metrics for ongoing system evaluation and improvement.
+
+\begin{table}[H]
+    \begin{adjustwidth}{-.85in}{-.85in}
+    \noindent
+    \centering
+    % \caption{Success Measurement Framework for TaskAlign Goals}
+    \label{tab:success_metrics}
+    \small 
+    \begin{tabularx}{1.3\textwidth}{|l|X|X|X|}
+        \hline
+        \textbf{Goal Level} & \textbf{Metrics} & \textbf{Data Collection Method} & \textbf{Success Criteria} \\
+        \hline
+        \textbf{Organizational} &
+        \begin{itemize}[nosep,leftmargin=*,topsep=2pt, partopsep=0pt, itemsep=1pt]
+            \item Production throughput
+            \item Machine utilization \%
+            \item On-time delivery rate
+        \end{itemize} &
+        \begin{itemize}[nosep,leftmargin=*,topsep=2pt, partopsep=0pt, itemsep=1pt]
+            \item Production records
+            \item Machine logs
+            \item Delivery performance data
+        \end{itemize} &
+        \begin{itemize}[nosep,leftmargin=*,topsep=2pt, partopsep=0pt, itemsep=1pt]
+            \item 15--20\% throughput increase
+            \item 10--15\% cost reduction
+            \item 80--85\% machine utilization
+            \item 95\%+ on-time delivery
+        \end{itemize} \\
+        \hline
+        \textbf{System} &
+        \begin{itemize}[nosep,leftmargin=*,topsep=2pt, partopsep=0pt, itemsep=1pt]
+            % \item Schedule generation time
+            \item Data input completion rate
+            \item User satisfaction score
+            \item System reliability
+        \end{itemize} &
+        \begin{itemize}[nosep,leftmargin=*,topsep=2pt, partopsep=0pt, itemsep=1pt]
+            % \item System logs
+            \item User interface analytics
+            \item User surveys
+            \item Error/crash reports
+        \end{itemize} &
+        \begin{itemize}[nosep,leftmargin=*,topsep=2pt, partopsep=0pt, itemsep=1pt]
+            % \item Schedules generated in <5 minutes
+            \item >95\% task completion rate
+            \item Satisfaction score >4/5
+            \item 90\% uptime
+        \end{itemize} \\
+        \hline
+        \textbf{User} &
+        \begin{itemize}[nosep,leftmargin=*,topsep=2pt, partopsep=0pt, itemsep=1pt]
+            \item Time spent on scheduling
+            \item Schedule adjustment frequency
+            \item Perceived ease of use
+            \item Reported efficiency gains
+        \end{itemize} &
+        \begin{itemize}[nosep,leftmargin=*,topsep=2pt, partopsep=0pt, itemsep=1pt]
+            \item System usage logs
+            \item User interviews
+            \item Satisfaction surveys
+            \item Time tracking
+        \end{itemize} &
+        \begin{itemize}[nosep,leftmargin=*,topsep=2pt, partopsep=0pt, itemsep=1pt]
+            \item 20--50\% reduction in scheduling time
+            \item <20\% schedules requiring adjustment
+            \item Ease of use rating >4/5
+            \item Positive efficiency feedback
+        \end{itemize} \\
+        \hline
+        \textbf{AI Model} &
+        \begin{itemize}[nosep,leftmargin=*,topsep=2pt, partopsep=0pt, itemsep=1pt]
+            \item Makespan (total production time) efficiency
+            \item Machine utilization \%
+            \item Constraint violation count
+            \item Computation time
+            \item Solution quality vs. baselines
+        \end{itemize} &
+        \begin{itemize}[nosep,leftmargin=*,topsep=2pt, partopsep=0pt, itemsep=1pt]
+            \item Algorithm performance logs
+            \item Simulation results
+            \item Comparative analysis
+            \item Benchmarking
+        \end{itemize} &
+        \begin{itemize}[nosep,leftmargin=*,topsep=2pt, partopsep=0pt, itemsep=1pt]
+            \item Makespan reduction of 15--25\% vs. manual
+            \item 80--85\% average machine utilization
+            \item Zero constraint violations
+            \item <5 minutes for typical problems
+            \item Consistently outperforms FCFS by >20\%
+        \end{itemize} \\
+        \hline
+    \end{tabularx}
+    \end{adjustwidth}
+    \caption{Success Measurement Framework for TaskAlign Goals}
+
+\end{table}
+
+% \begin{figure}[h]
+%     \centering
+%     \includegraphics[width=0.5\textwidth]{examples/tech-stack.png}
+%     \caption{Example technology stack}
+% \end{figure}
+
+\section{Task Requirements Analysis Using AI Canvas}
+\label{section:coding-standards}
+
+\subsection{AI Task Requirements}
+
+\subsubsection*{Requirements (REQ)}
+The AI scheduling component must:
+\begin{itemize}
+  \item Generate optimized production schedules for electronics manufacturing that assign specific tasks to machines over time
+  \item Consider all machine constraints including capabilities, cooldown times, and maintenance schedules
+  \item Respect product assembly dependencies and component prerequisites
+  \item Optimize for user-specified criteria, primarily minimizing total production time (makespan) and maximizing machine utilization
+  \item Generate valid schedules within 5 minutes for problems involving up to 15 machines and 100 tasks
+  \item Provide schedule visualization data for Gantt charts and timeline views
+  \item Support both \textbf{Fresh Start} and \textbf{Production Resume} modes for schedule generation
+\end{itemize}
+
+\subsubsection*{Specifications (SPEC)}
+The AI component will employ a genetic algorithm (GA) optimization approach with the following technical specifications:
+
+\paragraph{Encoding Mechanism}
+\begin{itemize}
+  \item Each candidate solution (chromosome) represents a complete production schedule
+  \item Schedule encoding uses a priority-based representation where genes represent task priorities for assignment to specific machines
+  \item Encoding incorporates machine eligibility constraints to ensure only valid assignments are considered
+\end{itemize}
+
+\paragraph{Algorithm Structure}
+\begin{itemize}
+  \item \textbf{Population size}: Adaptive based on problem size (50--200 chromosomes)
+  \item \textbf{Selection method}: Tournament selection with elitism (preserving top 10\% solutions)
+  \item \textbf{Crossover operator}: Order-based crossover preserving task dependencies
+  \item \textbf{Mutation operator}: Swap mutation with constraint preservation
+  \item \textbf{Termination criteria}: Convergence (no improvement for 50 generations) or time limit (180 seconds)
+\end{itemize}
+
+\paragraph{Fitness Evaluation}
+\begin{itemize}
+  \item \textbf{Primary objective}: Minimization of makespan (total completion time)
+  \item \textbf{Secondary objectives}: Machine utilization maximization, workload balance
+  \item \textbf{Constraint handling}: Penalty function for violations, with repair mechanisms
+  \item \textbf{Multi-objective optimization}: Weighted sum approach with user-adjustable weights
+\end{itemize}
+
+\subsubsection*{Environment (ENV)}
+
+\paragraph{Technical Environment}
+\begin{itemize}
+  \item No direct connection to manufacturing equipment (no sensor data feed)
+  \item Database integration for storing and retrieving machine/product specifications
+\end{itemize}
+
+\paragraph{User Environment}
+\begin{itemize}
+  \item Data manually input by factory staff with varying technical expertise
+  \item Web-based interface for schedule generation and visualization
+  \item Non-real-time operation (batch processing model)
+  \item Operation within traditional electronics manufacturing facilities
+\end{itemize}
+
+\paragraph{Operational Constraints}
+\begin{itemize}
+  \item Computation time limited to 5 minutes maximum for user acceptance
+  \item Schedule generation triggered on-demand, not continuously
+  \item Support for factories with 5--15 machines and 20--100 concurrent tasks
+  \item Compatibility with legacy manufacturing processes and equipment
+\end{itemize}
+
+\begin{table}[H]
+    \begin{adjustwidth}{-.85in}{-.85in}
+    \noindent
+    \centering
+    \label{tab:ai_canvas}
+    \footnotesize
+    \begin{tabularx}{1.3\textwidth}{|l|X|}
+        \hline
+        \textbf{Canvas Element} & \textbf{Description} \\
+        \hline
+        \textbf{Task Name} & Production Schedule Optimization \\
+        \hline
+        \textbf{Input Data} &
+        \textbf{Machine Data:}
+        \begin{itemize}[nosep,leftmargin=*,topsep=2pt, partopsep=0pt, itemsep=1pt]
+            \item Machine identifiers, types, capabilities
+            \item Processing times, cooldown requirements
+            \item Worker requirements, production rates, status information
+        \end{itemize}
+        \textbf{Product Data:}
+        \begin{itemize}[nosep,leftmargin=*,topsep=2pt, partopsep=0pt, itemsep=1pt]
+            \item Product specifications and components
+            \item Assembly steps and dependencies
+            \item Required machines for each component
+            \item Production quantities
+        \end{itemize}
+        \textbf{Scheduling Parameters:}
+        \begin{itemize}[nosep,leftmargin=*,topsep=2pt, partopsep=0pt, itemsep=1pt]
+            \item Scheduling mode (Fresh Start/Production Resume)
+            \item Optimization priorities
+            \item Deadline constraints
+        \end{itemize} \\
+        \hline
+        \textbf{Data Source} &
+        \begin{itemize}[nosep,leftmargin=*,topsep=2pt, partopsep=0pt, itemsep=1pt]
+            \item Manual input via TaskAlign web interface
+            \item Database of saved machine/product configurations
+            \item Existing production status (for Resume mode)
+        \end{itemize} \\
+        \hline
+        \textbf{Data Format} &
+        \begin{itemize}[nosep,leftmargin=*,topsep=2pt, partopsep=0pt, itemsep=1pt]
+            \item Structured JSON data
+            \item Relational database records
+            \item Normalized numerical parameters
+        \end{itemize} \\
+        \hline
+        \textbf{Expected Output} &
+        \textbf{Primary Output:}
+        \begin{itemize}[nosep,leftmargin=*,topsep=2pt, partopsep=0pt, itemsep=1pt]
+            \item Complete production schedule with task-machine assignments
+            \item Start and end times for each operation
+            \item Resource allocation plan
+        \end{itemize}
+        \textbf{Visualization Data:}
+        \begin{itemize}[nosep,leftmargin=*,topsep=2pt, partopsep=0pt, itemsep=1pt]
+            \item Gantt chart data structure
+            \item Timeline view information
+            \item Machine utilization statistics
+        \end{itemize}
+        \textbf{Performance Metrics:}
+        \begin{itemize}[nosep,leftmargin=*,topsep=2pt, partopsep=0pt, itemsep=1pt]
+            \item Calculated makespan
+            \item Estimated machine utilization percentages
+            \item Schedule quality indicators
+        \end{itemize} \\
+        \hline
+        \textbf{Success Criteria} &
+        \textbf{Effectiveness:}
+        \begin{itemize}[nosep,leftmargin=*,topsep=2pt, partopsep=0pt, itemsep=1pt]
+            \item 15--25\% makespan reduction compared to manual scheduling
+            \item Machine utilization improvement to 80--85\% average
+            \item Zero constraint violations
+        \end{itemize}
+        \textbf{Efficiency:}
+        \begin{itemize}[nosep,leftmargin=*,topsep=2pt, partopsep=0pt, itemsep=1pt]
+            \item Schedule generation within 5 minutes
+            \item Consistent performance across varying problem sizes
+        \end{itemize}
+        \textbf{Usability:}
+        \begin{itemize}[nosep,leftmargin=*,topsep=2pt, partopsep=0pt, itemsep=1pt]
+            \item Schedules require minimal manual adjustment (<20\%)
+            \item Positive user feedback on schedule practicality
+        \end{itemize} \\
+        \hline
+        \textbf{Measurement Approach} &
+        \begin{itemize}[nosep,leftmargin=*,topsep=2pt, partopsep=0pt, itemsep=1pt]
+            \item Comparison against baseline (First-Come First-Served (FCFS), manual scheduling)
+            \item Simulation validation of schedules
+            \item Performance benchmarking across standard problem instances
+            \item User surveys and feedback analysis
+        \end{itemize} \\
+        \hline
+    \end{tabularx}
+    \end{adjustwidth}
+    \caption{AI Canvas for TaskAlign Production Scheduling}
+\end{table}
+
+\section{User Experience Design with AI}
 \label{section:progress-tracking-report}
-<TIP: Show that you have been working on this project overtime.
-It can be in the form of a burndown chart or a contribution graph from GitHub./>
+
+\subsection{AI Ingegration in User Interfaces}
+TaskAlign integrates AI functionality through several key interfaces, as shown in the mockups in Figures 3.1-3.9 of the project proposal. The most important AI-related interface elements including
+
+\begin{enumerate}
+    \item \textbf{Data Input Screens (Machine Management, Product Management, Assembly Process)}
+ 
+    These screens allow users to input the data necessary for the AI to generate optimized schedules. The interfaces are structured to collect precisely the information the AI requires while remaining intuitive for non-technical users.
+    
+    \item \textbf{Scheduling Mode Selection}
+    
+    Users can choose between \textit{"Fresh Start Mode"} for new production planning and \textit{"Production Resume Mode"} for continuing partially completed production runs. This directly configures how the AI approaches the optimization problem.
+    
+    \item \textbf{Schedule Visualization}
+    
+    The AI's output is presented through multiple visualizations which are
+    \begin{itemize}
+        \item Gantt charts showing task assignments and timing (Figure 3.8)
+        \item Monthly calendar views for longer-term planning (Figure 3.9)
+        \item Daily schedule details for immediate implementation (Figure 3.10)
+    \end{itemize}
+    
+\end{enumerate}
+
+The interface design prioritizes clarity and usability while ensuring the AI component receives accurate input data and presents its results in an actionable format.
+
+\subsection{AI Interaction Model}
+
+TaskAlign primarily employs a \textit{Prompt} interaction model, where the AI suggests optimized schedules that users can review, potentially adjust, and implement. This model:
+\begin{itemize}[nosep,leftmargin=*,topsep=2pt, partopsep=0pt, itemsep=1pt]
+    \item Respects the expertise of factory managers by positioning the AI as a decision support tool rather than an autonomous system.
+    \item Maintains human oversight and judgment in the scheduling process.
+    \item Allows gradual trust-building as users observe the AI's performance over time.
+\end{itemize}
+
+
+The system also incorporates elements of the \textit{Annotate} model by providing context-enhancing information alongside schedules, including:
+\begin{itemize}[nosep,leftmargin=*,topsep=2pt, partopsep=0pt, itemsep=1pt]
+    \item Utilization statistics for each machine.
+    \item Identification of potential bottlenecks.
+    \item Visualization of dependencies between manufacturing steps.
+\end{itemize}
+
+\subsection{User Feedback Mechanisms}
+\label{subsec:user_feedback_mechanisms_continued} % Added _continued if it's a continuation
+
+TaskAlign incorporates several mechanisms for users to provide feedback on AI-generated schedules, including
+
+\paragraph{Direct Schedule Adjustment}
+Users can manually modify generated schedules through the Gantt chart interface. These adjustments are logged and can be analyzed to understand where the AI's solutions may not align with practical requirements.
+
+\paragraph{Schedule Acceptance Tracking}
+The system records whether generated schedules are accepted as-is, modified before implementation, or rejected entirely, providing quantitative feedback on AI performance.
+
+\paragraph{Structured Feedback Forms}
+After implementing a schedule, users can complete a brief evaluation form rating schedule quality and noting any issues encountered during implementation.
+
+\paragraph{Issue Reporting}
+A dedicated mechanism allows users to report specific problems with schedules (e.g., "This machine requires more cooldown time than scheduled") that can inform algorithm refinement.
+
+\subsection{AI Value Proposition} 
+\label{subsec:ai_value_proposition_continued} % Added _continued if it's a continuation
+
+The AI component offers significant advantages over traditional scheduling by leveraging computational power to explore numerous near-optimal schedules, ensuring consistency and eliminating human bias. It efficiently manages complex interdependencies across machines, tasks, and constraints, and enables rapid scenario analysis for "what-if" planning. By encoding scheduling expertise in algorithms, it preserves organizational knowledge despite staff changes. These capabilities lead to tangible business benefits, including reduced production time, higher throughput, improved machine utilization, and more agile production planning—making AI a valuable asset for efficient, scalable, and adaptive manufacturing operations.
+
+\section{Deployment Strategy}
+\subsection{Deploymeny Plan}
+
+\label{subsec:deployment_plan}
+
+\paragraph{Deployment Environment}
+The TaskAlign AI component will be deployed in a cloud-based environment for the following reasons
+
+\begin{enumerate}[label=\arabic*., nosep,leftmargin=*,topsep=2pt, partopsep=0pt, itemsep=1pt]
+    \item \textbf{Computational Requirements} 
+    
+    Genetic algorithms for complex scheduling problems require significant processing power that may exceed on-premises capabilities of target factories.
+    \item \textbf{Centralized Maintenance} 
+    
+    Cloud deployment enables updates and improvements to the AI component without requiring on-site intervention.
+    \item \textbf{Scalability} 
+    
+    Cloud resources can be dynamically allocated based on problem complexity, ensuring consistent performance regardless of scheduling scope.
+    \item \textbf{Accessibility} 
+    
+    Cloud deployment supports the web-based interface, allowing access from multiple locations within the factory or organization.
+\end{enumerate}
+
+\paragraph{Integration Architecture}
+
+The AI component will integrate with other system elements through the following mechanisms:
+\begin{enumerate}[label=\arabic*., nosep,leftmargin=*,topsep=2pt, partopsep=0pt, itemsep=1pt]
+    \item \textbf{API-Based Architecture} 
+    RESTful APIs will facilitate communication between
+        \begin{itemize}[label=\textendash, nosep,leftmargin=*,topsep=1pt, partopsep=0pt, itemsep=0pt]
+            \item Frontend (UI) and Backend (processing layer)
+            \item Backend and AI scheduling engine
+            \item Backend and database services
+        \end{itemize}
+    \item \textbf{Data Flow}
+        
+    User inputs $\rightarrow$ Database storage $\rightarrow$ Data preprocessing $\rightarrow$ AI scheduling engine $\rightarrow$ Schedule storage $\rightarrow$ Visualization rendering
+    \item \textbf{Service Isolation}
+        \begin{itemize}[label=\textendash, nosep,leftmargin=*,topsep=1pt, partopsep=0pt, itemsep=0pt]
+            \item The AI component will be containerized as a separate service to enable independent scaling and maintenance.
+            \item Asynchronous processing will allow the UI to remain responsive during computation-intensive optimization.
+        \end{itemize}
+\end{enumerate}
+
+\paragraph{Technology Stack}
+\begin{enumerate}[label=\arabic*., nosep,leftmargin=*,topsep=2pt, partopsep=0pt, itemsep=1pt]
+    \item \textbf{AI Component:}
+        \begin{itemize}[label=\textendash, nosep,leftmargin=*,topsep=1pt, partopsep=0pt, itemsep=0pt]
+            \item Python for core algorithm implementation
+            \item NumPy/SciPy for numerical operations
+            \item DEAP or PyGAD for genetic algorithm framework
+            \item Redis for job queuing and intermediate results
+        \end{itemize}
+    \item \textbf{Backend Services:}
+        \begin{itemize}[label=\textendash, nosep,leftmargin=*,topsep=1pt, partopsep=0pt, itemsep=0pt]
+            \item FastAPI for RESTful API development
+            \item PostgreSQL for relational data storage
+            \item Redis for caching and message brokering
+            \item Celery for task queue management
+        \end{itemize}
+    \item \textbf{Infrastructure:}
+        \begin{itemize}[label=\textendash, nosep,leftmargin=*,topsep=1pt, partopsep=0pt, itemsep=0pt]
+            \item Docker containers for service packaging
+            \item Kubernetes for orchestration (in production)
+            \item AWS, Google Cloud, or Azure for hosting
+            \item NGINX for reverse proxy and load balancing
+        \end{itemize}
+\end{enumerate}
+
+\paragraph{System Quality Attributes}
+\begin{enumerate}[label=\arabic*., nosep,leftmargin=*,topsep=2pt, partopsep=0pt, itemsep=1pt]
+    \item \textbf{Reliability:}
+        \begin{itemize}[label=\textendash, nosep,leftmargin=*,topsep=1pt, partopsep=0pt, itemsep=0pt]
+            \item Comprehensive error handling and recovery mechanisms
+            \item Failover capabilities for critical services
+            \item Automated testing suite with 90\%+ coverage
+            \item Transaction logging and schedule versioning
+        \end{itemize}
+    \item \textbf{Security:}
+        \begin{itemize}[label=\textendash, nosep,leftmargin=*,topsep=1pt, partopsep=0pt, itemsep=0pt]
+            \item Role-based access control for different user types
+            \item Encryption of data in transit and at rest
+            \item Input validation to prevent injection attacks
+            \item Regular security audits and penetration testing
+        \end{itemize}
+    \item \textbf{Maintainability and Scalability:}
+        \begin{itemize}[label=\textendash, nosep,leftmargin=*,topsep=1pt, partopsep=0pt, itemsep=0pt]
+            \item Modular architecture with clear separation of concerns
+            \item Comprehensive API documentation
+            \item Containerization for consistent environments
+            \item Horizontal scaling capabilities for increased load
+            \item Monitoring and alerting infrastructure
+        \end{itemize}
+\end{enumerate}
+
+\subsection{Proof of Concept}
+\label{subsec:proof_of_concept}
+
+\subsubsection{How we built and tested the AI model}
+\label{ssubsec:poc_build_test}
+
+We developed a production scheduling AI using a \textbf{Genetic Algorithm (GA)} approach. The system models the factory environment with real-world data structures for machines and product components, including constraints such as machine cooldowns, worker assignments, and production dependencies.
+
+To test the model, we created a set of sample data representing a realistic factory scenario, including multiple machines and components with dependencies.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.7\textwidth]{assets/examples/poc1.png}
+    % \fbox{Placeholder for POC1 Image (e.g., Sample Machine Data)}
+    \caption{Sample Machine Data for POC Testing.}
+    \label{fig:poc_sample_data_machines}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.7\textwidth]{assets/examples/poc2.png}
+    % \fbox{Placeholder for POC2 Image (e.g., Sample Product/Component Data)}
+    \caption{Sample Product and Component Data for POC Testing.}
+    \label{fig:poc_sample_data_products}
+\end{figure}
+
+We implemented two scheduling strategies:
+\begin{itemize}[nosep,leftmargin=*,topsep=2pt, partopsep=0pt, itemsep=1pt]
+    \item \textbf{Manual (Sequential) Scheduling:} Simulates a user planning production by processing one component at a time, regardless of machine availability.
+    \item \textbf{AI-Optimized Scheduling (GA):} Uses the genetic algorithm to search for the most efficient schedule, allowing parallel processing when possible and always respecting all constraints.
+\end{itemize}
+
+We visualized the results using Gantt charts to clearly compare the schedules produced by both methods.
+% Figure for POC3 (e.g., a conceptual diagram of the comparison setup)
+%
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{assets/examples/poc3.png}
+    \includegraphics[width=\textwidth]{assets/examples/poc4.png}
+    % \fbox{Placeholder for POC3 Image (e.g., Comparison Methodology)}
+    \caption{Methodology for Comparing Manual vs. GA-Optimized Schedules.}
+    \label{fig:poc_comparison_methodology}
+\end{figure}
+
+\subsubsection{Model's performance results using clear metrics}
+\label{ssubsec:poc_performance_results}
+
+The main performance metric is \textbf{total production time} (makespan), measured as the time from the start of the first task to the completion of the last task.
+
+In our tests:
+\begin{itemize}[nosep,leftmargin=*,topsep=2pt, partopsep=0pt, itemsep=1pt]
+    \item \textbf{Manual scheduling} resulted in a total production time of \textbf{160 minutes}.
+    \item \textbf{GA-optimized scheduling} reduced the total production time to \textbf{130 minutes} .
+    \item This demonstrates a performance improvement of \textbf{30 minutes}, or about \textbf{18.75\% faster} (Z = \(100 \times (160-130)/160\)).
+\end{itemize}
+
+Both schedules were visualized as Gantt charts, making it easy to see how the AI model increases machine utilization and overlaps tasks to minimize idle time.
+% Figure for POC4 (e.g., the actual Gantt chart comparison)
+%
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{assets/examples/poc5.png} % Use \textwidth if it's wide
+    % \fbox{Placeholder for POC4 Image (Gantt Chart Comparison: Manual vs. GA)}
+    \caption{Gantt Chart Comparison: Manual Scheduling vs. GA-Optimized Scheduling.}
+    \label{fig:poc_gantt_comparison}
+\end{figure}
+
+\subsubsection{Real-world examples or performance comparisons}
+\label{ssubsec:poc_real_world_examples}
+
+\paragraph{Example scenario}
+Suppose a factory needs to produce a control board, power module, display unit, and final assembly, each with specific machine and dependency requirements.
+\begin{itemize}[nosep,leftmargin=*,topsep=2pt, partopsep=0pt, itemsep=1pt]
+    \item In the \textbf{manual approach}, each component is scheduled one after another, leading to significant idle time for machines and a longer overall production time.
+    \item In the \textbf{AI-optimized approach}, the model automatically finds opportunities to run tasks in parallel (e.g., starting the power module and display unit as soon as their shared prerequisite is done), resulting in a much shorter production schedule.
+\end{itemize}
+
+\paragraph{Performance comparison}
+The Gantt charts (referenced in Figure \ref{fig:poc_gantt_comparison}, or presented below if space allows) illustrate the difference in scheduling:
+\begin{itemize}[nosep,leftmargin=*,topsep=2pt, partopsep=0pt, itemsep=1pt]
+    \item \textbf{Manual:} All tasks are sequential; machines are often idle.
+    \item \textbf{GA-Optimized:} Tasks are overlapped where possible; machines are used more efficiently, and the total production time is significantly reduced.
+\end{itemize}
